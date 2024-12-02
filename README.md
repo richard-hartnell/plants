@@ -16,6 +16,7 @@ Now with more dynamic behavior. Designed so I can quit Taskade.
     - weeding tasks
     - hardening tasks
     - winterizing tasks
+    - long-term plans
 
 ### The plan:
 
