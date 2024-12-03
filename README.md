@@ -24,3 +24,4 @@ Now with more dynamic behavior. Designed so I can quit Taskade.
 - build out the calendar functionality (add calendar events)
 - create something like workshop_scheduler to plot plants?
 - add a verison of bcg-emailer for extra harrassment
+- integrate that companion planting sheet where each object can be mutually referred to
