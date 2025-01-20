@@ -12,7 +12,12 @@ df = pd.read_sql('SELECT * FROM plants', conn)
 print (df)
 
 # Create a dictionary of plants
-
+for row in df.itertuples():
+    plant = {
+        'name': row.name,
+        'root_length': row.root_distance,
+    }
+    print(plant['name'])
 
 class Plant:
     def __init__(self, name, root_length, number_per_hex, early, late, maturity_age, direct_sow):
