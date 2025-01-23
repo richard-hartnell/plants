@@ -9,25 +9,29 @@ last_frost = datetime.date(year, 4, 15)
 
 conn = sqlite3.connect('nanofarm.db')
 df = pd.read_sql('SELECT * FROM plants', conn)
-print (df)
-
-# Create a dictionary of plants
-for row in df.itertuples():
-    plant = {
-        'name': row.name,
-        'root_length': row.root_distance,
-    }
-    print(plant['name'])
 
 class Plant:
-    def __init__(self, name, root_length, number_per_hex, early, late, maturity_age, direct_sow):
+    def __init__(self, name, root_length, early, late, maturity_age, direct_sow):
         self.name = name
         self.root_length = root_length
         self.early = early
         self.late = late
         self.maturity_age = maturity_age
-        self.number_per_hex = number_per_hex
         self.direct_sow = direct_sow
+
+# Create a dictionary of plants
+for row in df.itertuples():
+    plant = {
+        'name': row.name,
+        'root_distance': row.root_distance,
+        'hot': row.hot,
+        'cold': row.cold,
+        'days_to_mature': row.days_to_mature,
+        'direct_sow': row.direct_sow
+    }
+    print(plant['cold'])
+
+# here is where you need to create the plant subclasses from "plant" above.
 
     def __str__(self):
         return f"{self.name} ({self.species})"
