@@ -19,8 +19,35 @@ class Plant:
         self.maturity_age = maturity_age
         self.direct_sow = direct_sow
 
+
+# here is where you need to create the plant subclasses from "plant" above.
+
+def generate_plant(name, base_class, attrs):
+    # Create a new class that inherits from base_class with additional attributes
+    return type(name, (base_class,), attrs)
+
+
+#example
+
+subclass_attrs = {
+    # example method
+    'speak': lambda self: "Bark",
+    # New attribute
+    'legs': 4
+    # revise attribute?
+}
+
+Bean = generate_plant('Bean', Plant, subclass_attrs)
+
+
+# experimental subclassing code ends
+
+
+
 # Create a dictionary of plants
 for row in df.itertuples():
+
+
     plant = {
         'name': row.name,
         'root_distance': row.root_distance,
@@ -31,10 +58,8 @@ for row in df.itertuples():
     }
     print(plant['cold'])
 
-# here is where you need to create the plant subclasses from "plant" above.
-
-    def __str__(self):
-        return f"{self.name} ({self.species})"
+    # def __str__(self):
+    #     return f"{self.name} ({self.species})"
     
     def when_to_sow(self, early, late):
         if self.early:       
