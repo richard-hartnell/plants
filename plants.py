@@ -11,13 +11,13 @@ conn = sqlite3.connect('nanofarm.db')
 df = pd.read_sql('SELECT * FROM plants', conn)
 
 class Plant:
-    def __init__(self, name, root_length, early, late, maturity_age, direct_sow):
-        self.name = name
-        self.root_length = root_length
-        self.early = early
-        self.late = late
-        self.maturity_age = maturity_age
-        self.direct_sow = direct_sow
+    def __init__(self): # , name, root_length, early, late, maturity_age, direct_sow
+        # self.name = name
+        # self.root_length = root_length
+        # self.early = early
+        # self.late = late
+        # self.maturity_age = maturity_age
+        # self.direct_sow = direct_sow
 
 
 # here is where you need to create the plant subclasses from "plant" above.
@@ -35,6 +35,13 @@ subclass_attrs = {
     # New attribute
     'legs': 4
     # revise attribute?
+    'name' = name
+    'root_length' = root_length
+    'early' = early
+    'late' = late
+    'maturity_age' = maturity_age
+    'direct_sow' = direct_sow
+
 }
 
 Bean = generate_plant('Bean', Plant, subclass_attrs)
