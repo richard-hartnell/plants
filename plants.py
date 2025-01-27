@@ -12,15 +12,13 @@ df = pd.read_sql('SELECT * FROM plants', conn)
 
 class Plant:
     def __init__(self): # , name, root_length, early, late, maturity_age, direct_sow
-        # self.name = name
-        # self.root_length = root_length
-        # self.early = early
-        # self.late = late
-        # self.maturity_age = maturity_age
-        # self.direct_sow = direct_sow
-
-
-# here is where you need to create the plant subclasses from "plant" above.
+        self.plantname = None
+        self.root_length = 0
+        self.early = 0
+        self.late = 0
+        self.maturity_age = 0
+        self.direct_sow = 0
+        pass
 
 def generate_plant(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
@@ -30,22 +28,17 @@ def generate_plant(name, base_class, attrs):
 #example
 
 subclass_attrs = {
-    # example method
-    'speak': lambda self: "Bark",
-    # New attribute
-    'legs': 4
-    # revise attribute?
-    'name' = name
-    'root_length' = root_length
-    'early' = early
-    'late' = late
-    'maturity_age' = maturity_age
-    'direct_sow' = direct_sow
-
+    'plantname': 'Bean',
+    'root_length': 6,
+    'early': 0,
+    'late': 0,
+    'maturity_age': 80,
+    'direct_sow': 0
 }
 
 Bean = generate_plant('Bean', Plant, subclass_attrs)
 
+print(Bean.plantname)
 
 # experimental subclassing code ends
 
