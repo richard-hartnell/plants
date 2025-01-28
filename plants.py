@@ -2,7 +2,7 @@ import datetime
 from datetime import date
 import json
 import sqlite3
-# import pandas as pd
+import pandas as pd
 
 plant_types = []
 plants = []
@@ -10,18 +10,19 @@ year = datetime.datetime.now().year
 first_frost = datetime.date(year, 10, 22)
 last_frost = datetime.date(year, 4, 15)
 
-# conn = sqlite3.connect('nanofarm.db')
-# df = pd.read_sql('SELECT * FROM plants', conn)
+conn = sqlite3.connect('nanofarm.db')
+df = pd.read_sql('SELECT * FROM plants', conn)
+print(df)
 
 class Plant:
-    def __init__(self): # , name, root_length, early, late, maturity_age, direct_sow
+    def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
         pass
 
     def when_to_sow(self):
-        if self.early:       
+        if self.cold:       
             self.sow1_start = date(year, 2, 1)  # Spring planting
             self.sow1_end = date(0000, 5, 1)
-        if self.late:
+        if self.hot:
             self.sow2_start = date(year, 7, 15)  # Fall planting
             self.sow2_end = date(year, 8, 15)
         else:
@@ -39,8 +40,8 @@ def generate_plant_class(name, base_class, attrs):
 # subclass_attrs = {
 #     'plant_type': 'Bean',
 #     'root_length': 6,
-#     'early': 0,
-#     'late': 0,
+#     'cold': 0,
+#     'hot': 0,
 #     'maturity_age': 80,
 #     'direct_sow': 0
 # }
@@ -62,8 +63,8 @@ for row in df.itertuples():
     _plant_attrs = {
         'plant_type': row.name,
         'root_distance': row.root_distance,
-        'early': row.early,
-        'late': row.late,
+        'cold': row.cold,
+        'hot': row.hot,
         'days_to_mature': row.days_to_mature,
         'direct_sow': row.direct_sow
     }
@@ -71,9 +72,11 @@ for row in df.itertuples():
     if row.name in plant_types:
         pass
     else:
-        plant_types += row.name
+        plant_types.append(row.name)
         generate_plant_class(row.name, Plant, _plant_attrs)
     
     # how do I generate the object name from the varietal field here?
 
 conn.close()
+
+print (plant_types)
