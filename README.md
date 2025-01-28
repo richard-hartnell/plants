@@ -6,7 +6,6 @@ Now with more dynamic behavior. Designed so I can quit Taskade.
 
 ### TODO LIST
 
-- incorporate dates.
 - handle a table of plants and a table of plots.
 - create a garden plan based on companion planting and rotation
 - populate Google Calendar events with:
@@ -20,7 +19,6 @@ Now with more dynamic behavior. Designed so I can quit Taskade.
 
 ### The plan:
 
-- bulid out the database from the PLANTS sheet
 - build out the calendar functionality (add calendar events)
 - create something like workshop_scheduler to plot plants?
 - add a verison of bcg-emailer for extra harrassment
