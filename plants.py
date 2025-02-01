@@ -35,29 +35,6 @@ def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
     return type(name, (base_class,), attrs)
 
-##TESTING ZONE
-
-# subclass_attrs = {
-#     'plant_type': 'Bean',
-#     'root_length': 6,
-#     'cold': 0,
-#     'hot': 0,
-#     'maturity_age': 80,
-#     'direct_sow': 0
-# }
-
-# Bean = generate_plant_class('Bean', Plant, subclass_attrs)
-# Lettuce = generate_plant_class('Lettuce,', Plant, subclass_attrs)
-
-# dragon_tongue = Bean()
-
-# print(dragon_tongue.plant_type)
-# print(dragon_tongue.root_length)
-# dragon_tongue.when_to_sow()
-
-# print(dragon_tongue.sow1_start)
-# print(dragon_tongue.sow2_start)
-
 for row in df.itertuples():
 
     _plant_attrs = {
