@@ -6,6 +6,7 @@ import pandas as pd
 
 plant_types = []
 plants = []
+plots = []
 year = datetime.datetime.now().year
 first_frost = datetime.date(year, 10, 22)
 last_frost = datetime.date(year, 4, 15)
@@ -30,6 +31,14 @@ class Plant:
             self.sow1_end = date(year, 7, 1)
             self.sow2_start = None
             self.sow2_end = None
+
+class Plot:
+    def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
+        pass
+
+    self.warm_plants = []
+    self.cold_plants = []
+    self.max_root_length = 0
 
 def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
@@ -57,3 +66,14 @@ for row in df.itertuples():
 conn.close()
 
 print (plant_types)
+
+#TODO: add a Plots database to the sqlite3 database
+
+#OO
+# on run, load all plants from the database
+# check for any plants that aren't in a plot.
+# assign them automatically if poss.
+# if not, ask user to assign them
+# then, calc max root length for each plot
+# apply calculation from PLANTS sheet for hex size & number of hexes
+# ...
