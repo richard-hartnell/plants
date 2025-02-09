@@ -36,9 +36,17 @@ class Plot:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
         pass
 
-    self.warm_plants = []
+    self.hot_plants = []
     self.cold_plants = []
     self.max_root_length = 0
+
+    def add_plant(self, plant):
+        if plant.cold:
+            self.cold_plants.append(plant)
+        else:
+            self.hot_plants.append(plant)
+
+    plots.append(self)
 
 def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
