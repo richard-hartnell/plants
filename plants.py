@@ -34,19 +34,17 @@ class Plant:
 
 class Plot:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
+        self.hot_plants = []
+        self.cold_plants = []
+        self.max_root_length = 0
+        plots.append(self)
         pass
-
-    self.hot_plants = []
-    self.cold_plants = []
-    self.max_root_length = 0
 
     def add_plant(self, plant):
         if plant.cold:
             self.cold_plants.append(plant)
         else:
             self.hot_plants.append(plant)
-
-    plots.append(self)
 
 def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
@@ -60,14 +58,14 @@ for row in df.itertuples():
         'cold': row.cold,
         'hot': row.hot,
         'days_to_mature': row.days_to_mature,
-        'direct_sow': row.direct_sow
+        'direct_sow': row.direct_sow,
+        # 'varietal': row.varietal
     }
 
     if row.name in plant_types:
         pass
     else:
-        plant_types.append(row.name)
-        generate_plant_class(row.name, Plant, _plant_attrs)
+        plant_types.append(generate_plant_class(row.name, Plant, _plant_attrs))
     
     # how do I generate the object name from the varietal field here?
 
