@@ -53,22 +53,20 @@ def generate_plant_class(name, base_class, attrs):
 for row in df.itertuples():
 
     _plant_attrs = {
-        'plant_type': row.name,
+        'plant_type': row.name, #need to change this in db.
         'root_distance': row.root_distance,
         'cold': row.cold,
         'hot': row.hot,
         'days_to_mature': row.days_to_mature,
         'direct_sow': row.direct_sow,
-        # 'varietal': row.varietal
+        'varietal': row.varietal
     }
 
-    if row.name in plant_types:
+    if row.name in plant_types: #need to change "name" in db to "plant_type"
         pass
     else:
         plant_types.append(generate_plant_class(row.name, Plant, _plant_attrs))
     
-    # how do I generate the object name from the varietal field here?
-
 conn.close()
 
 print (plant_types)
