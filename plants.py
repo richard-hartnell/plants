@@ -53,7 +53,7 @@ def generate_plant_class(name, base_class, attrs):
 for row in df.itertuples():
 
     _plant_attrs = {
-        'plant_type': row.name, #need to change this in db.
+        'plant_type': row.plant_type, #need to change this in db.
         'root_distance': row.root_distance,
         'cold': row.cold,
         'hot': row.hot,
@@ -62,10 +62,10 @@ for row in df.itertuples():
         'varietal': row.varietal
     }
 
-    if row.name in plant_types: #need to change "name" in db to "plant_type"
+    if row.plant_type in plant_types: #need to change "name" in db to "plant_type"
         pass
     else:
-        plant_types.append(generate_plant_class(row.name, Plant, _plant_attrs))
+        plant_types.append(generate_plant_class(row.plant_type, Plant, _plant_attrs))
     
 conn.close()
 
