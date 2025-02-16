@@ -12,8 +12,8 @@ first_frost = datetime.date(year, 10, 22)
 last_frost = datetime.date(year, 4, 15)
 
 conn = sqlite3.connect('nanofarm.db')
-df = pd.read_sql('SELECT * FROM plants', conn)
-print(df)
+df_types = pd.read_sql('SELECT * FROM plant_types', conn)
+print(df_types)
 
 class Plant:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
@@ -50,7 +50,7 @@ def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
     return type(name, (base_class,), attrs)
 
-for row in df.itertuples():
+for row in df_types.itertuples():
 
     _plant_attrs = {
         'plant_type': row.plant_type, #need to change this in db.
@@ -69,7 +69,8 @@ for row in df.itertuples():
     
 conn.close()
 
-print (plant_types)
+for plant in plant_types:
+    print(plant.plant_type)
 
 #TODO: add a Plots database to the sqlite3 database
 
@@ -81,3 +82,6 @@ print (plant_types)
 # then, calc max root length for each plot
 # apply calculation from PLANTS sheet for hex size & number of hexes
 # ...
+# ...
+# ...
+# make plants
