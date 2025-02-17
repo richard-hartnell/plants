@@ -72,8 +72,6 @@ conn.close()
 for plant in plant_types:
     print(plant.plant_type)
 
-#TODO: add a Plots database to the sqlite3 database
-
 #OO
 # on run, load all plants from the database
 # check for any plants that aren't in a plot.
@@ -85,3 +83,5 @@ for plant in plant_types:
 # ...
 # ...
 # make plants
+
+#TODO: somehow import the plant relationships. add them to the db?
