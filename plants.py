@@ -74,7 +74,7 @@ for plant in plant_types:
 
 #OO
 # on run, load all plants from the database
-# check for any plants that aren't in a plot.
+# check for any plants in the db that aren't in a plot.
 # assign them automatically if poss.
 # if not, ask user to assign them
 # then, calc max root length for each plot
