@@ -50,6 +50,9 @@ def generate_plant_class(name, base_class, attrs):
     # Create a new class that inherits from base_class with additional attributes
     return type(name, (base_class,), attrs)
 
+def plot_plants():
+    pass
+
 for row in df_types.itertuples():
 
     _plant_attrs = {
@@ -59,7 +62,11 @@ for row in df_types.itertuples():
         'hot': row.hot,
         'days_to_mature': row.days_to_mature,
         'direct_sow': row.direct_sow,
-        'varietal': row.varietal
+        'varietal': row.varietal,
+        'friends': row.friends,
+        'foes': row.foes,
+        'allium': row.allium,
+        'brassica': row.brassica,
     }
 
     if row.plant_type in plant_types: #need to change "name" in db to "plant_type"
@@ -76,10 +83,9 @@ for plant in plant_types:
 # on run, load all plants from the database
 # check for any plants in the db that aren't in a plot.
 # assign them automatically if poss.
+# # use the comparison planting sheet in a function like workshop_scheduler
 # if not, ask user to assign them
 # then, calc max root length for each plot
 # apply calculation from PLANTS sheet for hex size & number of hexes
 # ...
 # make plants
-
-#TODO: somehow import the plant relationships. add them to the db?
