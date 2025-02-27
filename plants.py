@@ -12,9 +12,19 @@ first_frost = datetime.date(year, 10, 22)
 last_frost = datetime.date(year, 4, 15)
 
 conn = sqlite3.connect('nanofarm.db')
+cursor = conn.cursor()
+
 df_plant_types = pd.read_sql('SELECT * FROM plant_types', conn)
 df_plots = pd.read_sql('SELECT * FROM plots', conn)
-df_2025 = pd.read_sql('SELECT * FROM 2025', conn)
+df_2025 = pd.read_sql('SELECT * FROM this_year', conn)
+
+def add_fake_plot():
+    cursor.execute('''
+                INSERT INTO 'Plots' (id, plot_name, area, root_max)
+                VALUES (?, ?, ?, ?)
+                ''', (6969, 'Test Plot II', 100, 100))
+    conn.commit()
+    pass
 
 class Plant:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
@@ -57,7 +67,7 @@ def plot_plants():
 for row in df_plant_types.itertuples():
 
     _plant_attrs = {
-        'plant_type': row.plant_type, #need to change this in db.
+        'plant_type': row.plant_type,
         'root_distance': row.root_distance,
         'cold': row.cold,
         'hot': row.hot,
@@ -70,7 +80,7 @@ for row in df_plant_types.itertuples():
         'brassica': row.brassica,
     }
 
-    if row.plant_type in plant_types: #need to change "name" in db to "plant_type"
+    if row.plant_type in plant_types:
         pass
     else:
         plant_types.append(generate_plant_class(row.plant_type, Plant, _plant_attrs))
@@ -86,13 +96,19 @@ for row in df_plots.itertuples():
     else:
         plots.append(generate_plant_class(row.plot_name, Plot, _plot_attrs))
 
-conn.close()
-
 for plant in plant_types:
     print(plant.plant_type)
 
 for plot in plots:
     print(plot.plot_name)
+
+add_fake_plot()
+#this doesn't re-fetch the plots from the db, so the fake plot isn't printed.
+
+for plot in plots:
+    print(plot.plot_name)
+
+conn.close()
 
 #OO
 # on run, load all plants from the database
