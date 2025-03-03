@@ -63,7 +63,11 @@ def generate_plant_class(name, base_class, attrs):
 
 def plot_plants():
     # # Assign plants to plots
-    #     
+    # first, assign biggest plants (root length >14 in)
+    # check_compatibility(plant)
+    # display available plots to user
+    # prompt user about which plot
+    # then add the plant to the prompted plot
     pass
 
 def check_compatibility(plant):
@@ -72,6 +76,8 @@ def check_compatibility(plant):
         for _plant in plot:
             if _plant.name in plant.friends:
                 print (plot.name)
+    print(_friendly_plots)
+    
         
     return False
 
