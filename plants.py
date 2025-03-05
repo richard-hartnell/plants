@@ -26,6 +26,15 @@ def plant_this_year(_id, _varietal, _plant_type, _plot):
     conn.commit()
     pass
 
+#TODO: make this add the plot to the plant, and add the plant to the plot?
+def plot_plant(plant):
+    cursor.execute('''
+                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
+                VALUES (?, ?, ?, ?)
+                ''', (_id, _varietal, _plant_type, _plot))
+    conn.commit()
+    pass
+
 class Plant:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
         pass
@@ -66,7 +75,8 @@ def plot_plants():
     # first, assign biggest plants (root length >14 in)
     # check_compatibility(plant)
     # display available plots to user
-    # prompt user about which plot
+    end_plot = input("Which plot would you place this plant in?")
+
     # then add the plant to the prompted plot
     pass
 
