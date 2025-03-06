@@ -18,11 +18,20 @@ df_plant_types = pd.read_sql('SELECT * FROM plant_types', conn)
 df_plots = pd.read_sql('SELECT * FROM plots', conn)
 df_this_year = pd.read_sql('SELECT * FROM this_year', conn)
 
-def plant_this_year(_id, _varietal, _plant_type, _plot):
+def plant_this_plant(_id, _varietal, _plant_type, _plot):
     cursor.execute('''
                 INSERT INTO 'this_year' (id, varietal, plant_type, plot)
                 VALUES (?, ?, ?, ?)
                 ''', (_id, _varietal, _plant_type, _plot))
+    conn.commit()
+    pass
+
+def update_this_plant(_id, _varietal, _plant_type, _plot):
+    cursor.execute('''
+                UPDATE 'this_year' 
+                SET varietal = ?, plant_type = ?, plot = ?
+                WHERE id = ?
+                ''', (_varietal, _plant_type, _plot, _id))
     conn.commit()
     pass
 
@@ -31,7 +40,7 @@ def plot_plant(plant):
     cursor.execute('''
                 INSERT INTO 'this_year' (id, varietal, plant_type, plot)
                 VALUES (?, ?, ?, ?)
-                ''', (_id, _varietal, _plant_type, _plot))
+                ''', (plant.id, plant., _plant_type, _plot))
     conn.commit()
     pass
 
@@ -128,7 +137,9 @@ def fetch_plots():
 conn.close()
 
 #OO
-# on run, load all plants from the database
+# on run, load all plants and plots from the database.
+# load this year's plants (this_year).
+# append all plant_type info to each plant.
 # check for any plants in the db that aren't in a plot.
 # assign them automatically if possible
 # # use the comparison planting sheet in a function like workshop_scheduler
