@@ -28,14 +28,14 @@ def plant_this_plant(_id, _varietal, _plant_type, _plot):
 
 def update_this_plant(_id, _varietal, _plant_type, _plot):
     cursor.execute('''
-                UPDATE 'this_year' 
+                UPDATE 'this_year'
                 SET varietal = ?, plant_type = ?, plot = ?
                 WHERE id = ?
                 ''', (_varietal, _plant_type, _plot, _id))
     conn.commit()
     pass
 
-#TODO: make this add the plot to the plant, and add the plant to the plot?
+#TODO: make this add the plot to the plant (plant can be added to plot with Plot.plant(plant))
 def plot_plant(plant):
     cursor.execute('''
                 INSERT INTO 'this_year' (id, varietal, plant_type, plot)
@@ -137,8 +137,8 @@ def fetch_plots():
 conn.close()
 
 #OO
-# on run, load all plants and plots from the database.
-# load this year's plants (this_year).
+# on run, load all plants and plots from the database. DONE
+# load this year's plants (this_year). DONE
 # append all plant_type info to each plant.
 # check for any plants in the db that aren't in a plot.
 # assign them automatically if possible
