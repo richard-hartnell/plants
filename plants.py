@@ -141,6 +141,10 @@ conn.close()
 # load this year's plants (this_year). DONE
 # append all plant_type info to each plant.
 # check for any plants in the db that aren't in a plot.
+def check_unplotted_plants:
+    for plant in plants:
+        if not plant.plot:
+
 # assign them automatically if possible
 # # use the comparison planting sheet in a function like workshop_scheduler
 # if not, ask user to assign them
@@ -162,3 +166,6 @@ conn.close()
 # if there's a foe in the plot, subtract 3 points.
 # # keep in mind cold/hot planting.
 # make cold plants ignore hot plants and vice versa.
+# # on exit, rewrite everything to DB.
+
+# # is it easier to just make the internal DB and then compare the internal DB with the static one?
