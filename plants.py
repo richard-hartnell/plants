@@ -18,32 +18,6 @@ df_plant_types = pd.read_sql('SELECT * FROM plant_types', conn)
 df_plots = pd.read_sql('SELECT * FROM plots', conn)
 df_this_year = pd.read_sql('SELECT * FROM this_year', conn)
 
-def plant_this_plant(_id, _varietal, _plant_type, _plot):
-    cursor.execute('''
-                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
-                VALUES (?, ?, ?, ?)
-                ''', (_id, _varietal, _plant_type, _plot))
-    conn.commit()
-    pass
-
-def update_this_plant(_id, _varietal, _plant_type, _plot):
-    cursor.execute('''
-                UPDATE 'this_year'
-                SET varietal = ?, plant_type = ?, plot = ?
-                WHERE id = ?
-                ''', (_varietal, _plant_type, _plot, _id))
-    conn.commit()
-    pass
-
-#TODO: make this add the plot to the plant (plant can be added to plot with Plot.plant(plant))
-def plot_plant(plant):
-    cursor.execute('''
-                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
-                VALUES (?, ?, ?, ?)
-                ''', (plant.id, plant., _plant_type, _plot))
-    conn.commit()
-    pass
-
 class Plant:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
         pass
@@ -75,9 +49,26 @@ class Plot:
         else:
             self.hot_plants.append(plant)
 
+# Create a new class that inherits from base_class with additional attributes
 def generate_plant_class(name, base_class, attrs):
-    # Create a new class that inherits from base_class with additional attributes
     return type(name, (base_class,), attrs)
+
+def plant_this_plant(_id, _varietal, _plant_type, _plot):
+    cursor.execute('''
+                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
+                VALUES (?, ?, ?, ?)
+                ''', (_id, _varietal, _plant_type, _plot))
+    conn.commit()
+    pass
+
+def update_this_plant(_id, _varietal, _plant_type, _plot):
+    cursor.execute('''
+                UPDATE 'this_year'
+                SET varietal = ?, plant_type = ?, plot = ?
+                WHERE id = ?
+                ''', (_varietal, _plant_type, _plot, _id))
+    conn.commit()
+    pass
 
 def plot_plants():
     # # # so technically, this should just be a function that assigns plants to plots,
@@ -137,6 +128,15 @@ def fetch_plots():
             pass
         else:
             plots.append(generate_plant_class(row.plot_name, Plot, _plot_attrs))
+
+#TODO: make this add the plot to the plant (plant can be added to plot with Plot.plant(plant))
+def plot_plant(plant):
+    cursor.execute('''
+                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
+                VALUES (?, ?, ?, ?)
+                ''', (plant.id, plant., _plant_type, _plot))
+    conn.commit()
+    pass
 
 conn.close()
 
