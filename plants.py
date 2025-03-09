@@ -80,10 +80,14 @@ def generate_plant_class(name, base_class, attrs):
     return type(name, (base_class,), attrs)
 
 def plot_plants():
+    # # # so technically, this should just be a function that assigns plants to plots,
+    # # # not the function that decides which plants go into plots.
+
     # # Assign plants to plots
     # first, assign biggest plants (root length >14 in)
     # check_compatibility(plant)
     # display available plots to user
+    ## make sure they include all other plants so far.
     end_plot = input("Which plot would you place this plant in?")
 
     # then add the plant to the prompted plot
