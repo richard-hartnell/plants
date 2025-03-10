@@ -53,22 +53,14 @@ class Plot:
 def generate_plant_class(name, base_class, attrs):
     return type(name, (base_class,), attrs)
 
-def plant_this_plant(_id, _varietal, _plant_type, _plot):
-    cursor.execute('''
-                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
-                VALUES (?, ?, ?, ?)
-                ''', (_id, _varietal, _plant_type, _plot))
-    conn.commit()
-    pass
-
-def update_this_plant(_id, _varietal, _plant_type, _plot):
-    cursor.execute('''
-                UPDATE 'this_year'
-                SET varietal = ?, plant_type = ?, plot = ?
-                WHERE id = ?
-                ''', (_varietal, _plant_type, _plot, _id))
-    conn.commit()
-    pass
+def check_compatibility(plant):
+    _friendly_plots = []
+    for plot in plots:
+        for _plant in plot:
+            if _plant.name in plant.friends:
+                print (plot.name)
+    print(_friendly_plots)
+    return False
 
 def plot_plants():
     # # # so technically, this should just be a function that assigns plants to plots,
@@ -83,17 +75,6 @@ def plot_plants():
 
     # then add the plant to the prompted plot
     pass
-
-def check_compatibility(plant):
-    _friendly_plots = []
-    for plot in plots:
-        for _plant in plot:
-            if _plant.name in plant.friends:
-                print (plot.name)
-    print(_friendly_plots)
-    
-        
-    return False
 
 def fetch_plant_types():    
     for row in df_plant_types.itertuples():
@@ -129,14 +110,36 @@ def fetch_plots():
         else:
             plots.append(generate_plant_class(row.plot_name, Plot, _plot_attrs))
 
-#TODO: make this add the plot to the plant (plant can be added to plot with Plot.plant(plant))
-def plot_plant(plant):
+## DB FUNCTIONS
+def db_plant_this_plant(_id, _varietal, _plant_type, _plot): #this should take plant as input? also is this redudant bc below function?
     cursor.execute('''
                 INSERT INTO 'this_year' (id, varietal, plant_type, plot)
                 VALUES (?, ?, ?, ?)
-                ''', (plant.id, plant., _plant_type, _plot))
+                ''', (_id, _varietal, _plant_type, _plot))
     conn.commit()
     pass
+
+def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plant as input?
+    cursor.execute('''
+                UPDATE 'this_year'
+                SET varietal = ?, plant_type = ?, plot = ?
+                WHERE id = ?
+                ''', (_varietal, _plant_type, _plot, _id))
+    conn.commit()
+    pass
+
+# I think this is wrong actually, and fits in update_plant
+# def db_plot_plant(plant): #is this correct?
+#     _id = plant.id
+#     _varietal = plant.varietal
+#     _plant_type = plant.plant_type
+#     _plot = plant.plot
+#     cursor.execute('''
+#                 INSERT INTO 'this_year' (_id, _varietal, _plant_type, _plot)
+#                 VALUES (?, ?, ?, ?)
+#                 ''', (_id, _varietal, _plant_type, _plot))
+#     conn.commit()
+#     pass
 
 conn.close()
 
@@ -148,6 +151,7 @@ conn.close()
 def check_unplotted_plants:
     for plant in plants:
         if not plant.plot:
+            plot_plant(plant)
 
 # assign them automatically if possible
 # # use the comparison planting sheet in a function like workshop_scheduler
