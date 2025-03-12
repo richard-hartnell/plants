@@ -110,23 +110,7 @@ def fetch_plots():
         else:
             plots.append(generate_plant_class(row.plot_name, Plot, _plot_attrs))
 
-## DB FUNCTIONS
-def db_plant_this_plant(_id, _varietal, _plant_type, _plot): #this should take plant as input? also is this redudant bc below function?
-    cursor.execute('''
-                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
-                VALUES (?, ?, ?, ?)
-                ''', (_id, _varietal, _plant_type, _plot))
-    conn.commit()
-    pass
 
-def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plant as input?
-    cursor.execute('''
-                UPDATE 'this_year'
-                SET varietal = ?, plant_type = ?, plot = ?
-                WHERE id = ?
-                ''', (_varietal, _plant_type, _plot, _id))
-    conn.commit()
-    pass
 
 # I think this is wrong actually, and fits in update_plant
 # def db_plot_plant(plant): #is this correct?
@@ -148,7 +132,7 @@ conn.close()
 # load this year's plants (this_year). DONE
 # append all plant_type info to each plant.
 # check for any plants in the db that aren't in a plot.
-def check_unplotted_plants:
+def check_unplotted_plants():
     for plant in plants:
         if not plant.plot:
             plot_plant(plant)
@@ -176,4 +160,20 @@ def check_unplotted_plants:
 # make cold plants ignore hot plants and vice versa.
 # # on exit, rewrite everything to DB.
 
-# # is it easier to just make the internal DB and then compare the internal DB with the static one?
+## DB FUNCTIONS
+def db_plant_this_plant(_id, _varietal, _plant_type, _plot): #this should take plant as input? also is this redudant bc below function?
+    cursor.execute('''
+                INSERT INTO 'this_year' (id, varietal, plant_type, plot)
+                VALUES (?, ?, ?, ?)
+                ''', (_id, _varietal, _plant_type, _plot))
+    conn.commit()
+    pass
+
+def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plant as input?
+    cursor.execute('''
+                UPDATE 'this_year'
+                SET varietal = ?, plant_type = ?, plot = ?
+                WHERE id = ?
+                ''', (_varietal, _plant_type, _plot, _id))
+    conn.commit()
+    pass
