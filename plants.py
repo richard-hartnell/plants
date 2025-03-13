@@ -50,7 +50,7 @@ class Plot:
             self.hot_plants.append(plant)
 
 # Create a new class that inherits from base_class with additional attributes
-def generate_plant_class(name, base_class, attrs):
+def generate_class(name, base_class, attrs):
     return type(name, (base_class,), attrs)
 
 def check_compatibility(plant):
@@ -67,10 +67,16 @@ def plot_plants():
     # # # not the function that decides which plants go into plots.
 
     # # Assign plants to plots
+    for plant in plants:
+        if plant.plot:
+            pass
+        else:
+
     # first, assign biggest plants (root length >14 in)
     # check_compatibility(plant)
     # display available plots to user
     ## make sure they include all other plants so far.
+    
     end_plot = input("Which plot would you place this plant in?")
 
     # then add the plant to the prompted plot
@@ -96,7 +102,7 @@ def fetch_plant_types():
         if row.plant_type in plant_types:
             pass
         else:
-            plant_types.append(generate_plant_class(row.plant_type, Plant, _plant_attrs))
+            plant_types.append(generate_class(row.plant_type, Plant, _plant_attrs))
 
 def fetch_plots():
     for row in df_plots.itertuples():
@@ -108,7 +114,7 @@ def fetch_plots():
         if row.plot_name in plots:
             pass
         else:
-            plots.append(generate_plant_class(row.plot_name, Plot, _plot_attrs))
+            plots.append(generate_class(row.plot_name, Plot, _plot_attrs))
 
 
 
@@ -158,6 +164,8 @@ def check_unplotted_plants():
 # if there's a foe in the plot, subtract 3 points.
 # # keep in mind cold/hot planting.
 # make cold plants ignore hot plants and vice versa.
+
+
 # # on exit, rewrite everything to DB.
 
 ## DB FUNCTIONS
@@ -177,3 +185,17 @@ def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plan
                 ''', (_varietal, _plant_type, _plot, _id))
     conn.commit()
     pass
+
+
+
+
+
+### let's build it out from the bottom.
+#there are plant types in the database, and each varietal will get one.
+#but just for the purpose of building out its own stats. so a varietal is a subclass of plant.
+#in the db, varietals should thus have the same fields as plant types, plus others.
+#plots will exist in their own table, and have varietals in it.
+#each year will have a list of varietals, each in a plot.
+#the user will manually plot the largest plants in each plot,
+#and then be given lists of friends to add to each large plant.
+#this will happen for Cold Season, Hot Season, and Catch Season.
