@@ -160,11 +160,8 @@ def check_unplotted_plants():
 # if there's a different big plant type in a plot, move to a different plot.
 # this means you should have a limit of three big hot plants and three (six?) big cold plants.
 # # interplant the smaller plants (root length ~1/2 the big L)
-# if there's a friend in the plot, add 1 point.
-# if there's a foe in the plot, subtract 3 points.
-# # keep in mind cold/hot planting.
-# make cold plants ignore hot plants and vice versa.
-
+# show friends
+# show foes
 
 # # on exit, rewrite everything to DB.
 
