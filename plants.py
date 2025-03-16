@@ -53,36 +53,7 @@ class Plot:
 def generate_class(name, base_class, attrs):
     return type(name, (base_class,), attrs)
 
-def check_compatibility(plant):
-    _friendly_plots = []
-    for plot in plots:
-        for _plant in plot:
-            if _plant.name in plant.friends:
-                print (plot.name)
-    print(_friendly_plots)
-    return False
-
-def plot_plants():
-    # # # so technically, this should just be a function that assigns plants to plots,
-    # # # not the function that decides which plants go into plots.
-
-    # # Assign plants to plots
-    for plant in plants:
-        if plant.plot:
-            pass
-        else:
-
-    # first, assign biggest plants (root length >14 in)
-    # check_compatibility(plant)
-    # display available plots to user
-    ## make sure they include all other plants so far.
-    
-    end_plot = input("Which plot would you place this plant in?")
-
-    # then add the plant to the prompted plot
-    pass
-
-def fetch_plant_types():    
+def fetch_plant_types():    #takes all plant types from the DB and puts them in list plant_types.
     for row in df_plant_types.itertuples():
 
         _plant_attrs = {
@@ -104,7 +75,7 @@ def fetch_plant_types():
         else:
             plant_types.append(generate_class(row.plant_type, Plant, _plant_attrs))
 
-def fetch_plots():
+def fetch_plots(): #takes all plots from DB and puts them in list plots.
     for row in df_plots.itertuples():
         _plot_attrs = {
             'plot_name': row.plot_name,
@@ -118,19 +89,6 @@ def fetch_plots():
 
 
 
-# I think this is wrong actually, and fits in update_plant
-# def db_plot_plant(plant): #is this correct?
-#     _id = plant.id
-#     _varietal = plant.varietal
-#     _plant_type = plant.plant_type
-#     _plot = plant.plot
-#     cursor.execute('''
-#                 INSERT INTO 'this_year' (_id, _varietal, _plant_type, _plot)
-#                 VALUES (?, ?, ?, ?)
-#                 ''', (_id, _varietal, _plant_type, _plot))
-#     conn.commit()
-#     pass
-
 conn.close()
 
 #OO
@@ -138,6 +96,7 @@ conn.close()
 # load this year's plants (this_year). DONE
 # append all plant_type info to each plant.
 # check for any plants in the db that aren't in a plot.
+
 def check_unplotted_plants():
     for plant in plants:
         if not plant.plot:
@@ -185,10 +144,22 @@ def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plan
 
 
 
-
-
 ### let's build it out from the bottom.
 #there are plant types in the database, and each varietal will get one.
+def type_varietal(plant):
+    for _type in plant_types:
+        if value == plant.plant_type:
+            plant.root_distance = _type.root_distance
+            plant.cold = _type.cold
+            plant.hot = _type.hot
+            plant.days_to_mature = _type.days_to_mature
+            plant.direct_sow = _type.direct_sow
+            plant.friends = _type.friends
+            plant.foes = _type.foes
+            plant.allium = _type.allium
+            plant.brassica = _type.brassica
+    
+
 #but just for the purpose of building out its own stats. so a varietal is a subclass of plant.
 #in the db, varietals should thus have the same fields as plant types, plus others.
 #plots will exist in their own table, and have varietals in it.
@@ -196,3 +167,21 @@ def db_update_plant(_id, _varietal, _plant_type, _plot): # this should take Plan
 #the user will manually plot the largest plants in each plot,
 #and then be given lists of friends to add to each large plant.
 #this will happen for Cold Season, Hot Season, and Catch Season.
+
+
+# per plot,
+# per season,
+# prompt which plant to add.
+def plan_plot(plot):
+    ## THE LOOP
+    # find any varietals that haven't been plotted.
+    # display all cold plants with root distance > 12.
+    # prompt user to select one.
+    # add to plot.
+    # find friends of that plant with root distance < 12.
+    # prompt user to select one.
+    # add to plot.
+    # take an optional friend root distance < second plant.
+    # add to plot.
+    ## REPEAT FOR SECOND AND THIRD SEASONS
+    ## THIRD SEASON IS COMPLICATED.
