@@ -18,8 +18,32 @@ df_plant_types = pd.read_sql('SELECT * FROM plant_types', conn)
 df_plots = pd.read_sql('SELECT * FROM plots', conn)
 df_this_year = pd.read_sql('SELECT * FROM this_year', conn)
 
-class Plant:
+class PlantType:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
+        pass
+
+    def when_to_sow(self):
+        if self.cold:
+            self.sow1_start = date(year, 2, 1)  # Spring planting
+            self.sow1_end = date(0000, 5, 1)
+        if self.hot:
+            self.sow2_start = date(year, 7, 15)  # Fall planting
+            self.sow2_end = date(year, 8, 15)
+        else:
+            self.sow1_start = date(year,5, 1)
+            self.sow1_end = date(year, 7, 1)
+            self.sow2_start = None
+            self.sow2_end = None
+
+class Plant(PlantType): #TODO: this
+    def __init__(self, root_length, cold, hot, maturity_age, direct_sow, friends, foes, allium, brassica):
+        self.root_length = PlantType.root_length
+        self.cold = PlantType.cold
+        self.hot = PlantType.hot
+        self.maturity_age = PlantType.maturity_age
+        self.direct_sow = PlantType.direct_sow
+        self.friends = PlantType.friends
+        self.foes = PlantType.foes
         pass
 
     def when_to_sow(self):
@@ -73,7 +97,7 @@ def fetch_plant_types():    #takes all plant types from the DB and puts them in 
         if row.plant_type in plant_types:
             pass
         else:
-            plant_types.append(generate_class(row.plant_type, Plant, _plant_attrs))
+            plant_types.append(generate_class(row.plant_type, PlantType, _plant_attrs))
 
 def fetch_plots(): #takes all plots from DB and puts them in list plots.
     for row in df_plots.itertuples():
@@ -87,7 +111,27 @@ def fetch_plots(): #takes all plots from DB and puts them in list plots.
         else:
             plots.append(generate_class(row.plot_name, Plot, _plot_attrs))
 
+def fetch_varietals():    #takes all plant types from the DB and puts them in list plant_types.
+    for row in df_this_year.itertuples():
 
+        _plant_attrs = {
+            'plant_type': row.plant_type,
+            'root_distance': row.root_distance,
+            'cold': row.cold,
+            'hot': row.hot,
+            'days_to_mature': row.days_to_mature,
+            'direct_sow': row.direct_sow,
+            'varietal': row.varietal,
+            'friends': row.friends,
+            'foes': row.foes,
+            'allium': row.allium,
+            'brassica': row.brassica,
+        }
+
+        if row.plant_type in plant_types:
+            pass
+        else:
+            plant_types.append(generate_class(row.varietal, PlantType, _plant_attrs))
 
 conn.close()
 
@@ -158,7 +202,10 @@ def type_varietal(plant):
             plant.foes = _type.foes
             plant.allium = _type.allium
             plant.brassica = _type.brassica
-    
+
+fetch_plant_types()
+fetch_plots()
+
 
 #but just for the purpose of building out its own stats. so a varietal is a subclass of plant.
 #in the db, varietals should thus have the same fields as plant types, plus others.
@@ -173,6 +220,8 @@ def type_varietal(plant):
 # per season,
 # prompt which plant to add.
 def plan_plot(plot):
+    unplotted_plants = []
+
     ## THE LOOP
     # find any varietals that haven't been plotted.
     # display all cold plants with root distance > 12.
