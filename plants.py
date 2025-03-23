@@ -25,7 +25,7 @@ class PlantType:
     def when_to_sow(self):
         if self.cold:
             self.sow1_start = date(year, 2, 1)  # Spring planting
-            self.sow1_end = date(0000, 5, 1)
+            self.sow1_end = date(year, 5, 1)
         if self.hot:
             self.sow2_start = date(year, 7, 15)  # Fall planting
             self.sow2_end = date(year, 8, 15)
@@ -49,7 +49,7 @@ class Plant(PlantType): #TODO: this
     def when_to_sow(self):
         if self.cold:
             self.sow1_start = date(year, 2, 1)  # Spring planting
-            self.sow1_end = date(0000, 5, 1)
+            self.sow1_end = date(year, 5, 1)
         if self.hot:
             self.sow2_start = date(year, 7, 15)  # Fall planting
             self.sow2_end = date(year, 8, 15)
