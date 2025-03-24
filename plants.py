@@ -46,18 +46,18 @@ class Plant(PlantType): #TODO: this
         self.foes = PlantType.foes
         pass
 
-    def when_to_sow(self):
-        if self.cold:
-            self.sow1_start = date(year, 2, 1)  # Spring planting
-            self.sow1_end = date(year, 5, 1)
-        if self.hot:
-            self.sow2_start = date(year, 7, 15)  # Fall planting
-            self.sow2_end = date(year, 8, 15)
-        else:
-            self.sow1_start = date(year,5, 1)
-            self.sow1_end = date(year, 7, 1)
-            self.sow2_start = None
-            self.sow2_end = None
+    # def when_to_sow(self):
+    #     if self.cold:
+    #         self.sow1_start = date(year, 2, 1)  # Spring planting
+    #         self.sow1_end = date(year, 5, 1)
+    #     if self.hot:
+    #         self.sow2_start = date(year, 7, 15)  # Fall planting
+    #         self.sow2_end = date(year, 8, 15)
+    #     else:
+    #         self.sow1_start = date(year,5, 1)
+    #         self.sow1_end = date(year, 7, 1)
+    #         self.sow2_start = None
+    #         self.sow2_end = None
 
 class Plot:
     def __init__(self): # , name, root_length, cold, hot, maturity_age, direct_sow
@@ -206,6 +206,12 @@ def type_varietal(plant):
 fetch_plant_types()
 fetch_plots()
 
+print ("PLANT TYPES")
+for plant in plant_types:
+    print(plant.plant_type)
+for plot in plots:
+    print(plot.plot_name)
+
 
 #but just for the purpose of building out its own stats. so a varietal is a subclass of plant.
 #in the db, varietals should thus have the same fields as plant types, plus others.
@@ -221,6 +227,9 @@ fetch_plots()
 # prompt which plant to add.
 def plan_plot(plot):
     unplotted_plants = []
+    for plant in plants:
+        if plant.plot == None:
+            unplotted_plants.append(plant)
 
     ## THE LOOP
     # find any varietals that haven't been plotted.
